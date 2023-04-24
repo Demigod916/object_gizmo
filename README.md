@@ -8,7 +8,7 @@ created by me from just gutting logic from dolu_tool and creating an export esse
 
 ## how-to
 
-there is an example in the test.lua file.
+there is an example in the test.lua file. (you will probably want to remove this file before using this in production)
 
 exports.object_gizmo:useGizmo(object)
 
