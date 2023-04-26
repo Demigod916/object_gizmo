@@ -6,6 +6,7 @@ local function toggleNuiFrame(bool)
 end
 
 function useGizmo(handle)
+
     SendNUIMessage({
         action = 'setGizmoEntity',
         data = {
@@ -17,9 +18,15 @@ function useGizmo(handle)
 
     toggleNuiFrame(true)
 
-    lib.showTextUI('[Esc] - Done Editing')
+    lib.showTextUI(
+        ('Current Mode: %s  \n'):format("translate") ..
+        '[W]   - Translate Mode  \n' ..
+        '[R]   - Rotate Mode  \n' ..
+        '[Esc] - Done Editing  \n'
+    )
 
     while usingGizmo do
+
         SendNUIMessage({
             action = 'setCameraPosition',
             data = {
@@ -57,6 +64,16 @@ RegisterNUICallback('finishEdit', function(data, cb)
             handle = nil,
         }
     })
+    cb('ok')
+end)
+
+RegisterNUICallback('swapMode', function(data, cb)
+    lib.showTextUI(
+        ('Current Mode: %s  \n'):format(data.mode) ..
+        '[W]   - Translate Mode  \n' ..
+        '[R]   - Rotate Mode  \n' ..
+        '[Esc] - Done Editing  \n'
+    )
     cb('ok')
 end)
 

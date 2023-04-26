@@ -16,7 +16,7 @@ export const TransformComponent = () => {
       position: {
         x: mesh.current.position.x,
         y: -mesh.current.position.z,
-        z: mesh.current.position.y,
+        z: mesh.current.position.y - 0.5,
       },
       rotation: {
         x: MathUtils.radToDeg(mesh.current.rotation.x),
@@ -35,7 +35,7 @@ export const TransformComponent = () => {
 
     mesh.current.position.set(
       entity.position.x,
-      entity.position.z,
+      entity.position.z + 0.5,
       -entity.position.y
     );
     mesh.current.rotation.order = "YZX";
@@ -50,10 +50,14 @@ export const TransformComponent = () => {
     const keyHandler = (e: KeyboardEvent) => {
       switch (e.code) {
         case "KeyR":
+          if (editorMode == "rotate") return;
           setEditorMode("rotate");
+          fetchNui("swapMode", { mode: "Rotate" });
           break;
         case "KeyW":
+          if (editorMode == "translate") return;
           setEditorMode("translate");
+          fetchNui("swapMode", { mode: "Translate" });
           break;
         case "Escape":
           fetchNui("finishEdit");
