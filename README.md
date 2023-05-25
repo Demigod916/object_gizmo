@@ -1,20 +1,48 @@
-# Object Gizmo
-This is a FiveM resource that lets you control any object using the threejs Transform Controls. This is meant mainly as a tool for developers to use to create their own systems. a furniture system for example.
-created by me from just gutting logic from dolu_tool and creating an export essentially.
+# Object Gizmo Module - object_gizmo
+
+This README provides instructions on how to use the `object_gizmo` module in the FiveM framework using Lua. This module exports a `useGizmo` function that enables manipulation of entity position and rotation through a NUI frame.
 
 ## Installation
-- drag into your resources
-- add `ensure object_gizmo` to your server.cfg
 
-## how-to
+1. Download the `object_gizmo` resource.
+2. Extract the `object_gizmo` folder into your server's `resources` directory.
+3. Add `start object_gizmo` to your server's `server.cfg` file.
 
-there is an example in the test.lua file. (you will probably want to remove this file before using this in production)
+After installation, you can use the `useGizmo` function in your scripts: `exports['object_gizmo']:useGizmo(handle)`
 
-exports.object_gizmo:useGizmo(object)
+## Export
+
+`exports("useGizmo", useGizmo)`
+
+## Functions
+
+### useGizmo(handle)
+
+- `handle`: The entity to be manipulated.
+
+This function opens a NUI frame and allows for the manipulation of the entity's position and rotation. It returns an object with the entity's handle, final position, and final rotation.
+
+## Usage
+
+Ensure the `object_gizmo` module script is running on your server.
+
+The `useGizmo` function can be used in any Lua script on the server or client side as follows:
 
 ```lua
---example of how the gizmo could be used /spawnobject {object model name}
-RegisterCommand('spawnobject',function(source, args, rawCommand) 
+local handle = --[[@ Your target entity handle]]
+local result = exports['object_gizmo']:useGizmo(handle)
+```
+
+`result` will contain the entity handle, final position, and final rotation.
+
+## Test Command
+
+This module includes a test command `spawnobject` that demonstrates how to use the gizmo. You can use this command in-game by typing `/spawnobject {object model name}` in the console. If no object model name is provided, `prop_bench_01a` is used by default.
+
+The command creates an object at the player's location and then activates the gizmo for that object.
+
+```lua
+RegisterCommand('spawnobject',function(source, args, rawCommand)
     local objectName = args[1] or "prop_bench_01a"
     local playerPed = PlayerPedId()
     local offset = GetOffsetFromEntityInWorldCoords(playerPed, 0, 1.0, 0)
@@ -23,31 +51,22 @@ RegisterCommand('spawnobject',function(source, args, rawCommand)
     lib.requestModel(model, 5000)
 
     local object = CreateObject(model, offset.x, offset.y, offset.z, true, false, false)
-     --export for the gizmo. just pass an object handle to the function.
+
     local objectPositionData = exports.object_gizmo:useGizmo(object)
-    
+
     print(json.encode(objectPositionData, { indent = true }))
-    
-    -- return value of the export
-    -- {
-    -- handle: objectid,
-    -- position: vec3,
-    -- rotation: vec3
-    -- }
 end)
-
-
-
 ```
 
-## preview
-https://streamable.com/bp4oqp
+## Controls
 
+While using the gizmo, the following controls apply:
+- [W]: Switch to Translate Mode
+- [R]: Switch to Rotate Mode
+- [Esc]: Finish editing
 
-## Credits
-The react logic for the gizmo came from dolu_tool which was worked on by all of these fine people.
-- **[Dolu](https://github.com/dolutattoo)**
-- **[AnthonyTCS](https://github.com/AnthonyTCS)**
-- **[Tiwabs](https://github.com/Tiwabs)**
-- **[Lentokone](https://github.com/Aik-10)**
-- **[Luke](https://github.com/Lukewastakenn)**
+The current mode (Translate/Rotate) will be displayed on the screen.
+
+## Note
+
+The gizmo only works on entities that you have sufficient permissions to manipulate. Make sure you have the correct permissions to move or rotate the entity you are working with.
