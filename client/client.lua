@@ -20,9 +20,10 @@ function useGizmo(handle)
 
     lib.showTextUI(
         ('Current Mode: %s  \n'):format("translate") ..
-        '[W]   - Translate Mode  \n' ..
-        '[R]   - Rotate Mode  \n' ..
-        '[Esc] - Done Editing  \n'
+        '[W]    - Translate Mode  \n' ..
+        '[R]    - Rotate Mode  \n' ..
+        '[LALT] - Place On Ground  \n' ..
+        '[Esc]  - Done Editing  \n'
     )
 
     while usingGizmo do
@@ -56,6 +57,11 @@ RegisterNUICallback('moveEntity', function(data, cb)
     cb('ok')
 end)
 
+RegisterNUICallback('placeOnGround', function(data, cb)
+    PlaceObjectOnGroundProperly(data.handle)
+    cb('ok')
+end)
+
 RegisterNUICallback('finishEdit', function(data, cb)
     toggleNuiFrame(false)
     SendNUIMessage({
@@ -70,9 +76,10 @@ end)
 RegisterNUICallback('swapMode', function(data, cb)
     lib.showTextUI(
         ('Current Mode: %s  \n'):format(data.mode) ..
-        '[W]   - Translate Mode  \n' ..
-        '[R]   - Rotate Mode  \n' ..
-        '[Esc] - Done Editing  \n'
+        '[W]    - Translate Mode  \n' ..
+        '[R]    - Rotate Mode  \n' ..
+        '[LALT] - Place On Ground  \n' ..
+        '[Esc]  - Done Editing  \n'
     )
     cb('ok')
 end)

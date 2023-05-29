@@ -62,6 +62,9 @@ export const TransformComponent = () => {
         case "Escape":
           fetchNui("finishEdit");
           break;
+        case "AltLeft":
+          fetchNui("placeOnGround", {handle: currentEntity});
+          break;
         default:
           break;
       }
