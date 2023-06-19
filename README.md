@@ -63,7 +63,8 @@ end)
 While using the gizmo, the following controls apply:
 - [W]: Switch to Translate Mode
 - [R]: Switch to Rotate Mode
-- [Esc]: Finish editing
+- [LAlt]: Place on Ground
+- [Esc]: Finish Editing
 
 The current mode (Translate/Rotate) will be displayed on the screen.
 
