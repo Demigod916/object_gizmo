@@ -46,7 +46,7 @@ end)
 ## Controls
 
 While using the gizmo, the following controls apply:
-- [T]: Switch to Translate Mode
+- [W]: Switch to Translate Mode
 - [R]: Switch to Rotate Mode
 - [S]: Switch to Scale Mode (if enabled)
 - [Q]: Switch between Relative and World
