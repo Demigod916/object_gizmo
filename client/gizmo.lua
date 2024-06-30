@@ -94,10 +94,9 @@ local function textUILoop()
         while gizmoEnabled do
             Wait(100)
             local scaleText = (enableScale and '[S]     - Scale Mode  \n') or ''
-
             lib.showTextUI(
                 ('Current Mode: %s | %s  \n'):format(currentMode, (isRelative and 'Relative') or 'World') ..
-                '[T]     - Translate Mode  \n' ..
+                '[W]     - Translate Mode  \n' ..
                 '[R]     - Rotate Mode  \n' ..
                 scaleText ..
                 '[Q]     - Relative/World  \n' ..
@@ -105,7 +104,6 @@ local function textUILoop()
                 '[ENTER] - Done Editing  \n'
             )
         end
-        print('hide')
         lib.hideTextUI()
     end)
 end
@@ -130,7 +128,7 @@ exports("useGizmo", useGizmo)
 -- CONTROLS
 
 lib.addKeybind({
-    name = 'gizmoSelect',
+    name = '_gizmoSelect',
     description = 'Selects the currently highlighted gizmo',
     defaultMapper = 'MOUSE_BUTTON',
     defaultKey = 'MOUSE_LEFT',
@@ -141,7 +139,7 @@ lib.addKeybind({
 })
 
 lib.addKeybind({
-    name = 'gizmoTranslation',
+    name = '_gizmoTranslation',
     description = 'Sets mode of the gizmo to translation',
     defaultKey = 'W',
     onPressed = function(self)
@@ -152,7 +150,7 @@ lib.addKeybind({
 })
 
 lib.addKeybind({
-    name = 'gizmoRotation',
+    name = '_gizmoRotation',
     description = 'Sets mode for the gizmo to rotation',
     defaultKey = 'R',
     onPressed = function(self)
@@ -163,7 +161,7 @@ lib.addKeybind({
 })
 
 lib.addKeybind({
-    name = 'gizmoLocal',
+    name = '_gizmoLocal',
     description = 'toggle gizmo to be local to the entity instead of world',
     defaultKey = 'Q',
     onPressed = function(self)
@@ -195,7 +193,7 @@ lib.addKeybind({
 
 if enableScale then
     lib.addKeybind({
-        name = 'gizmoScale',
+        name = '_gizmoScale',
         description = 'Sets mode for the gizmo to scale',
         defaultKey = 'S',
         onPressed = function(self)
