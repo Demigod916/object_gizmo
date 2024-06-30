@@ -4,7 +4,7 @@
 
 local dataview = require 'client.dataview'
 
-local enableScale = false -- set this to true if you want to scale objects. doesnt really work in a way thats useful
+local enableScale = false -- allow scaling mode. doesnt scale collisions and resets when physics are applied it seems
 
 local gizmoEnabled = false
 local currentMode = 'translate'
@@ -12,6 +12,14 @@ local isRelative = false
 local currentEntity
 
 -- FUNCTIONS
+
+local function normalize(x, y, z)
+    local length = math.sqrt(x * x + y * y + z * z)
+    if length == 0 then
+        return 0, 0, 0
+    end
+    return x / length, y / length, z / length
+end
 
 local function makeEntityMatrix(entity)
     local f, r, u, a = GetEntityMatrix(entity)
@@ -38,11 +46,22 @@ local function makeEntityMatrix(entity)
 end
 
 local function applyEntityMatrix(entity, view)
+    local x1, y1, z1 = view:GetFloat32(16), view:GetFloat32(20), view:GetFloat32(24)
+    local x2, y2, z2 = view:GetFloat32(0), view:GetFloat32(4), view:GetFloat32(8)
+    local x3, y3, z3 = view:GetFloat32(32), view:GetFloat32(36), view:GetFloat32(40)
+    local tx, ty, tz = view:GetFloat32(48), view:GetFloat32(52), view:GetFloat32(56)
+
+    if not enableScale then
+        x1, y1, z1 = normalize(x1, y1, z1)
+        x2, y2, z2 = normalize(x2, y2, z2)
+        x3, y3, z3 = normalize(x3, y3, z3)
+    end
+
     SetEntityMatrix(entity,
-        view:GetFloat32(16), view:GetFloat32(20), view:GetFloat32(24),
-        view:GetFloat32(0), view:GetFloat32(4), view:GetFloat32(8),
-        view:GetFloat32(32), view:GetFloat32(36), view:GetFloat32(40),
-        view:GetFloat32(48), view:GetFloat32(52), view:GetFloat32(56)
+        x1, y1, z1,
+        x2, y2, z2,
+        x3, y3, z3,
+        tx, ty, tz
     )
 end
 
