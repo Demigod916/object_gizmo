@@ -144,7 +144,7 @@ end
 
 exports("useGizmo", useGizmo)
 
--- CONTROLS
+-- CONTROLS these execute the existing gizmo commands but allow me to add additional logic to update the mode display.
 
 lib.addKeybind({
     name = '_gizmoSelect',
@@ -155,6 +155,9 @@ lib.addKeybind({
         if not gizmoEnabled then return end
         ExecuteCommand('+gizmoSelect')
     end,
+    onReleased = function (self)
+        ExecuteCommand('-gizmoSelect')
+    end
 })
 
 lib.addKeybind({
