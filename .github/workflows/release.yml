@@ -3,9 +3,8 @@ name: Release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
   workflow_dispatch:
-
 
 jobs:
   create-release:
@@ -41,7 +40,7 @@ jobs:
           push: true
           author_name: Manifest Bumper
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
-          message: 'chore: bump manifest version to ${{ github.ref_name }}'
+          message: "chore: bump manifest version to ${{ github.ref_name }}"
 
       - name: Update tag ref
         uses: EndBug/latest-tag@latest
@@ -52,7 +51,7 @@ jobs:
         run: |
           mkdir -p ./temp/object_gizmo
           cp ./{LICENSE,README.md,fxmanifest.lua,version.lua} ./temp/object_gizmo
-          cp -r ./{client,} ./temp/object_gizmo
+          cp -r ./client ./temp/object_gizmo
           cd ./temp && zip -r ../object_gizmo.zip ./object_gizmo
 
       - name: Create Release
