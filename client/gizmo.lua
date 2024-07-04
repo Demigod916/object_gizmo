@@ -169,6 +169,9 @@ lib.addKeybind({
         currentMode = 'Translate'
         ExecuteCommand('+gizmoTranslation')
     end,
+    onReleased = function (self)
+        ExecuteCommand('-gizmoTranslation')
+    end
 })
 
 lib.addKeybind({
@@ -180,6 +183,9 @@ lib.addKeybind({
         currentMode = 'Rotate'
         ExecuteCommand('+gizmoRotation')
     end,
+    onReleased = function (self)
+        ExecuteCommand('-gizmoRotation')
+    end
 })
 
 lib.addKeybind({
@@ -191,6 +197,9 @@ lib.addKeybind({
         isRelative = not isRelative
         ExecuteCommand('+gizmoLocal')
     end,
+    onReleased = function (self)
+        ExecuteCommand('-gizmoLocal')
+    end
 })
 
 lib.addKeybind({
@@ -223,5 +232,8 @@ if enableScale then
             currentMode = 'Scale'
             ExecuteCommand('+gizmoScale')
         end,
+        onReleased = function (self)
+            ExecuteCommand('-gizmoScale')
+        end
     })
 end
