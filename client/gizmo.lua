@@ -76,25 +76,30 @@ local function gizmoLoop(entity)
     end
 
     EnterCursorMode()
-    isCursorActive = true
 
     if IsEntityAPed(entity) then
         SetEntityAlpha(entity, 200)
     else
         SetEntityDrawOutline(entity, true)
     end
-    
+
+    isCursorActive = true
+
     while gizmoEnabled and DoesEntityExist(entity) do
         Wait(0)
+
+        DisableControlAction(0, 191, true)
+        DisableControlAction(0, 176, true)
+
         if IsControlJustPressed(0, 47) then -- G
             if isCursorActive then
                 LeaveCursorMode()
-                isCursorActive = false
             else
                 EnterCursorMode()
-                isCursorActive = true
             end
+            isCursorActive = not isCursorActive
         end
+
         DisableControlAction(0, 24, true)  -- lmb
         DisableControlAction(0, 25, true)  -- rmb
         DisableControlAction(0, 140, true) -- r
@@ -108,11 +113,14 @@ local function gizmoLoop(entity)
             applyEntityMatrix(entity, matrixBuffer)
         end
     end
-    
-    if isCursorActive then
-        LeaveCursorMode()
-    end
+
     isCursorActive = false
+
+    while IsControlPressed(0, 191) or IsDisabledControlPressed(0, 191) do
+        Wait(0)
+    end
+
+    LeaveCursorMode()
 
     if DoesEntityExist(entity) then
         if IsEntityAPed(entity) then SetEntityAlpha(entity, 255) end
@@ -122,6 +130,7 @@ local function gizmoLoop(entity)
     gizmoEnabled = false
     currentEntity = nil
 end
+
 
 local function GetVectorText(vectorType) 
     if not currentEntity then return 'ERR_NO_ENTITY_' .. (vectorType or "UNK") end
