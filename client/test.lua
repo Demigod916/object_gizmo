@@ -1,3 +1,7 @@
+if not Config.debug then return end
+
+lib.print.warn('Debug mode is enabled. Do not use debug in production.')
+
 local model = `prop_mp_cone_02`
 RegisterCommand('testGizmo', function()
 	local offset = GetEntityCoords(cache.ped) + GetEntityForwardVector(cache.ped) * 3
